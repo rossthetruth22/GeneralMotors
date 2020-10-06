@@ -30,17 +30,20 @@ struct Song{
         
         guard let jsonData = json["results"] as? [[String:AnyObject]] else{return [Song]()}
         
+        //print(jsonData)
         var returnSongs = [Song]()
         for song in jsonData{
+            print(song)
             guard let artistName = song["artistName"] as? String,
             let trackName = song["trackName"] as? String,
             let releaseDate = song["releaseDate"] as? String,
-            let primaryGenreName = song["primaryGenre"] as? String,
-                let trackPrice = song["trackPrice"] as? String else{
+            let primaryGenreName = song["primaryGenreName"] as? String,
+            let trackPrice = song["trackPrice"] as? Double else{
                     continue
             }
             
-            let currentSong = Song(artistName: artistName, trackName: trackName, releaseDate: releaseDate, primaryGenreName: primaryGenreName, trackPrice: trackPrice)
+            
+            let currentSong = Song(artistName: artistName, trackName: trackName, releaseDate: releaseDate, primaryGenreName: primaryGenreName, trackPrice: String(trackPrice))
             returnSongs.append(currentSong)
         }
         

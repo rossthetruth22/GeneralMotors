@@ -10,15 +10,15 @@ import Foundation
 
 class NetworkService: NSObject{
     
-    func getDataMethod(song: String, completionHandlerForGET: @escaping (_ data: Data?, _ error: Error?) -> Void){
+     func getDataMethod(parameters: [String:AnyObject], completionHandlerForGET: @escaping (_ data: AnyObject?, _ error: Error?) -> Void){
         
         
         let session = URLSession.shared
         
         //let url = URL(string: "https://itunes.apple.com/search?term=\(song)")
         
-        let method = ["term": song] as [String:AnyObject]
-        let url = self.buildURLwithComponents(method)
+        //let method = ["term": song] as [String:AnyObject]
+        let url = self.buildURLwithComponents(parameters)
         
         let request = URLRequest(url: url)
         
@@ -44,7 +44,8 @@ class NetworkService: NSObject{
                     completionHandlerForGET(nil, error)
                 }else{
                     guard let result = result else{return}
-                    print(result)
+                    //print(result)
+                    completionHandlerForGET(result, nil)
                 }
                 
                 
