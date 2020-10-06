@@ -15,9 +15,12 @@ class NetworkService: NSObject{
         
         let session = URLSession.shared
         
-        let url = URL(string: "https://itunes.apple.com/search?term=\(song)")
+        //let url = URL(string: "https://itunes.apple.com/search?term=\(song)")
         
-        let request = URLRequest(url: url!)
+        let method = ["term": song] as [String:AnyObject]
+        let url = self.buildURLwithComponents(method)
+        
+        let request = URLRequest(url: url)
         
         let task = session.dataTask(with: request) { (data, response, error) in
             guard error == nil else{
@@ -41,7 +44,7 @@ class NetworkService: NSObject{
                     completionHandlerForGET(nil, error)
                 }else{
                     guard let result = result else{return}
-                    
+                    print(result)
                 }
                 
                 
@@ -50,6 +53,23 @@ class NetworkService: NSObject{
             
         }
         task.resume()
+    }
+    
+    private func buildURLwithComponents(_ parameters: [String:AnyObject]) -> URL{
+        
+        var component = URLComponents()
+        component.scheme = "https"
+        component.host = "itunes.apple.com"
+        component.path = "/search"
+        component.queryItems = [URLQueryItem]()
+        
+        for (key, value) in parameters{
+            let queryItem = URLQueryItem(name: key, value: "\(value)")
+            component.queryItems?.append(queryItem)
+        }
+        
+        //print(component.url)
+        return component.url!
     }
     
     private func convertDataToJSON(_ data: Data, completionHandlerForData: (_ json: AnyObject?, _ error: Error?) -> Void){

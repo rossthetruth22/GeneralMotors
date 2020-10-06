@@ -9,6 +9,13 @@
 import UIKit
 
 class SongCell: UITableViewCell {
+    
+    @IBOutlet weak var artistName: UILabel!
+    @IBOutlet weak var trackName: UILabel!
+    @IBOutlet weak var releaseDate: UILabel!
+    @IBOutlet weak var primaryGenreName: UILabel!
+    @IBOutlet weak var trackPrice: UILabel!
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()

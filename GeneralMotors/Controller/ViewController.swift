@@ -10,11 +10,16 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var songs = [Song]()
+    
+    @IBOutlet weak var searchSongText: UITextField!
+    @IBOutlet weak var searchButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let network = NetworkService.sharedInstance()
-        network.getDataMethod(song: "ciscero") { (result, error) in
+        network.getDataMethod(song: "jay electronica") { (result, error) in
             print("here")
         }
         
@@ -22,5 +27,10 @@ class ViewController: UIViewController {
     }
 
 
+}
+
+extension ViewController: UITextFieldDelegate{
+    
+    
 }
 
