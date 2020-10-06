@@ -53,6 +53,7 @@ struct Song{
             dateFormatter.timeStyle = .none
             let formattedDate = dateFormatter.string(from: dateObject)
             
+            //Create Song
             let currentSong = Song(artistName: artistName, trackName: trackName, releaseDate: formattedDate, primaryGenreName: primaryGenreName, trackPrice: "$\(trackPrice)")
             
             returnSongs.append(currentSong)

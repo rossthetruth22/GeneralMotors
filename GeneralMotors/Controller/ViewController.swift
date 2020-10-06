@@ -12,7 +12,6 @@ class ViewController: UIViewController {
     
     var songs = [Song]()
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var searchSongText: UITextField!
     @IBOutlet weak var searchButton: UIButton!
     
@@ -27,7 +26,7 @@ class ViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //If we touch outside keyboard we want to dismiss it
+        //If we touch outside keyboard we want to dismiss it by resigning first responder
         view.endEditing(true)
     }
     
@@ -64,6 +63,9 @@ class ViewController: UIViewController {
         network.getSongsFromiTunes(text) { (songs, error) in
             if let error = error{
                 print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    activityView.stopAnimating()
+                }
             }else{
                 if let returnedSongs = songs{
                     self.songs = returnedSongs
@@ -77,7 +79,6 @@ class ViewController: UIViewController {
                 }
             }
         }
-        
     }
     
 }
