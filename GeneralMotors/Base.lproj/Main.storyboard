@@ -90,13 +90,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="artistName" destination="4jt-R9-Xt2" id="gEw-hF-F70"/>
-                        <outlet property="primaryGenreName" destination="neI-ZJ-bFk" id="Bla-DQ-iu7"/>
-                        <outlet property="releaseDate" destination="ZxF-qI-XK9" id="rVH-gz-aJM"/>
                         <outlet property="searchButton" destination="hG6-I5-vjl" id="tjc-h3-Lrt"/>
                         <outlet property="searchSongText" destination="8fX-LK-xW6" id="XoY-IW-l3m"/>
-                        <outlet property="trackName" destination="bwp-1L-3uO" id="Vb9-gF-FNc"/>
-                        <outlet property="trackPrice" destination="Jkw-2q-Iax" id="2kD-dW-3p8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
