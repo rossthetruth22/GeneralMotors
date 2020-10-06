@@ -42,7 +42,18 @@ struct Song{
                 continue
             }
             
-            let currentSong = Song(artistName: artistName, trackName: trackName, releaseDate: releaseDate, primaryGenreName: primaryGenreName, trackPrice: String(trackPrice))
+            //Convert releaseDate to a nicer looking date
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+            
+            let dateObject = dateFormatter.date(from: releaseDate)!
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .none
+            let formattedDate = dateFormatter.string(from: dateObject)
+            
+            let currentSong = Song(artistName: artistName, trackName: trackName, releaseDate: formattedDate, primaryGenreName: primaryGenreName, trackPrice: "$\(trackPrice)")
             
             returnSongs.append(currentSong)
         }
