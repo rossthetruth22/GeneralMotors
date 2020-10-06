@@ -18,17 +18,16 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // Do any additional setup after loading the view.
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.isHidden = true
         searchSongText.delegate = self
                 
-        
-        // Do any additional setup after loading the view.
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //If we touch outside keyboard we want to dismiss it
         view.endEditing(true)
     }
     
@@ -38,6 +37,7 @@ class ViewController: UIViewController {
     }
     
     func clearTableView(){
+        //Clear everything from the tableView
         songs.removeAll()
         tableView.separatorStyle = .none
         tableView.reloadData()
@@ -45,8 +45,10 @@ class ViewController: UIViewController {
     }
     
     func displayDataInTable(){
+        //Don't want blank text
         guard let text = searchSongText.text, text.count > 0 else{return}
         
+        //Activity spinner
         let activityView = UIActivityIndicatorView()
         activityView.style = .large
         activityView.center = CGPoint(x: tableView.frame.size.width/2, y: tableView.frame.size.height/2)
@@ -57,7 +59,7 @@ class ViewController: UIViewController {
         self.tableView.isHidden = false
         activityView.startAnimating()
         
-        
+        //Call to get Song data
         let network = NetworkService.sharedInstance()
         network.getSongsFromiTunes(text) { (songs, error) in
             if let error = error{
@@ -65,6 +67,7 @@ class ViewController: UIViewController {
             }else{
                 if let returnedSongs = songs{
                     self.songs = returnedSongs
+                    //Load tableView with data
                     DispatchQueue.main.async{
                         activityView.stopAnimating()
                         self.searchSongText.resignFirstResponder()
@@ -80,8 +83,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UITextFieldDelegate{
-    
-    
+        
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         displayDataInTable()
@@ -101,6 +103,7 @@ extension ViewController: UITextFieldDelegate{
 }
 
 extension ViewController: UITableViewDataSource{
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return songs.count
     }
@@ -119,6 +122,5 @@ extension ViewController: UITableViewDataSource{
         
         return UITableViewCell()
     }
-    
     
 }

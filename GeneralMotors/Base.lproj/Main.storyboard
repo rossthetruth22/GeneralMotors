@@ -25,7 +25,9 @@
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hG6-I5-vjl">
                                         <rect key="frame" x="275" y="0.0" width="99" height="34"/>
-                                        <state key="normal" title="Show Records"/>
+                                        <state key="normal" title="Show Records">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
                                         <connections>
                                             <action selector="showButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gvo-0P-3KH"/>
                                         </connections>

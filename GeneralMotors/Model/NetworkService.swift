@@ -15,42 +15,38 @@ class NetworkService: NSObject{
         
         let session = URLSession.shared
         
-        //let url = URL(string: "https://itunes.apple.com/search?term=\(song)")
-        
-        //let method = ["term": song] as [String:AnyObject]
         let url = self.buildURLwithComponents(parameters)
         
         let request = URLRequest(url: url)
         
         let task = session.dataTask(with: request) { (data, response, error) in
+            //Check for any error
             guard error == nil else{
                 completionHandlerForGET(nil, error)
                 return
             }
             
-            //Check for return code
+            //Check for successful http response code
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode , 200...299 ~= statusCode else{
                 completionHandlerForGET(nil, error)
                 return
             }
             
+            //Unwrap data
             guard let data = data else{
                 completionHandlerForGET(nil, error)
                 return
             }
             
+            //Convert data to JSON format
             self.convertDataToJSON(data) { (result, error) in
                 if let error = error{
                     completionHandlerForGET(nil, error)
                 }else{
                     guard let result = result else{return}
-                    //print(result)
                     completionHandlerForGET(result, nil)
                 }
-                
-                
             }
-            
             
         }
         task.resume()
@@ -58,6 +54,7 @@ class NetworkService: NSObject{
     
     private func buildURLwithComponents(_ parameters: [String:AnyObject]) -> URL{
         
+        //URL to pull iTunes data
         var component = URLComponents()
         component.scheme = "https"
         component.host = "itunes.apple.com"
@@ -69,14 +66,13 @@ class NetworkService: NSObject{
             component.queryItems?.append(queryItem)
         }
         
-        //print(component.url)
         return component.url!
     }
     
     private func convertDataToJSON(_ data: Data, completionHandlerForData: (_ json: AnyObject?, _ error: Error?) -> Void){
         
         var parsedData: AnyObject! = nil
-        
+        //convert to JSON
         do{
             parsedData = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject
             
@@ -86,6 +82,7 @@ class NetworkService: NSObject{
         completionHandlerForData(parsedData, nil)
     }
     
+    //Singleton for network calls
     class func sharedInstance() -> NetworkService{
         struct Singleton{
             static var sharedInstance = NetworkService()
